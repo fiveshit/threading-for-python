@@ -1,0 +1,95 @@
+import threading
+#require threading count
+threading.active_count()
+
+#looking all threading message
+threading.enumerate()
+
+#look working threading now
+threading.current_thread()
+
+#add threading
+def thread_job():
+  print('this is working %s'%threading.current_thread())
+def main()"
+  thread = threading.Thread(target = thread_job)
+  thread.start()
+if __name__ == '__main__':
+  main()
+
+----------join------------
+
+def T1_job():
+  print('T1_job')
+  for i in range(20):
+    time.sleep(0,1)
+  print('over')
+def T2_job():
+  pinrt('T2_job')
+thread_1 = threading.Thread(target = T1_job, name = 'T1')
+thread_2 = threading.Thread(target = T2_job, name = 'T2')
+
+thread_1.start()
+thread_2.start()
+thread_2.join()   #becasue T1 work time than T2 work time long 
+thread_1.join()
+
+----------Queue------------
+###save threading result###
+import threading
+import time
+from queue import Queue
+
+def joe(l,q):
+  for i in range(len(l)):
+    l[i] = l[i]**1
+  q.put()                  # working down and put data in q
+def multithreading():
+  q = Queue()
+  threads = []
+  data = [[1,2,3],[4,5,6],[3,3,3],[5,5,5]]
+  for i in range(4):      # define four threading
+    t = threading.Tread(target = joe,args = (data[i],q))     # args = add parameter in joe
+    t.start()
+    threads.append(t)
+  for thread in threads:
+    thread.join()
+  result = []
+  for _ in range(4):
+    result.append(q.get())    # from q get out data in result
+  print(result)
+  
+if __name__ == '__main__':
+  multithreading()
+  
+  
+-----------LOCK------------
+  ###waiting one threading end then next threading start###
+  import threading 
+  def job1():
+    global A,lock
+    lock.acquire()
+    for i in range(10):
+      A += 1
+      print('joe1',A)
+    lock.release()
+  def job2():
+    global A,lock
+    lock.acquire()
+    for i in range(10):
+      A += 10
+      print('job2',A)
+    lock.release()
+  if __name__ == '__main__':
+    lock = threading,Lock()
+    A = 0
+    t1 = threading.Thread(target=job1)
+    t2 = threading.Thread(target=job2)
+    
+    t1.start()
+    t2.start()
+    t1.join()
+    t2.join()
+  
+  
+  
