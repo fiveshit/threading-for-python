@@ -49,7 +49,7 @@ def multithreading():
   threads = []
   data = [[1,2,3],[4,5,6],[3,3,3],[5,5,5]]
   for i in range(4):      # define four threading
-    t = threading.Tread(target = joe,args = (data[i],q))     # args = add parameter in joe
+    t = threading.Thread(target = joe,args = (data[i],q))     # args = add parameter in joe
     t.start()
     threads.append(t)
   for thread in threads:
