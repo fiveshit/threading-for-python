@@ -1,0 +1,57 @@
+import multiprocessing as mp
+
+def joe(q):
+    x = 0
+    for _ in range(100):
+        x += _
+    q.put()
+
+if __name__ == '__main__':
+    q = mp.Queue()
+    m1 = mp.Process(target = joe, args = (q,))
+    m1.start()
+    m1.join()
+    res = q.get()
+    print(res)
+
+
+-----------Pool-------------有Pool就可以使用return  
+
+import multiprocessing as mp
+
+
+def job(x):
+    return x*x 
+def multicore():
+    pool = mp.Pool()
+    res = pool.map(job,range(10))
+    res = pool.apply_async(job,(2,))   #設定要用幾個核心
+    print(res)
+if __name__ == '__main__':
+    multicore()
+    
+----共享內存Value--------
+import multiprocessing as mp
+
+
+def job(v,x,l):
+    l.acquire()
+    v.res += x
+    print(v.res)
+    l.release()
+
+
+def multi():
+    v = mp.Value('i', 1)   # i 表示內存為整數型
+    l = mp.Lock()
+    m1 = mp.Process(target = job, args = (v,1,l))
+    m2 = mp.Process(target = job, args = (v,3,l))
+    m1.start()
+    m2.start()
+    m1.join()
+    m2.join()
+if __name__ == '__main__':
+    multi()
+
+
+ 
